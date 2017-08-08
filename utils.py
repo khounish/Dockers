@@ -1,7 +1,7 @@
 import requests
 from time import sleep
 
-def checkForProdCluster():
+def checkForProdCluster(name):
     url = "https://dbc-db50c5d5-5ae4.cloud.databricks.com/api/2.0/clusters/list"
 
     res = requests.get(url=url, auth=('production@aarp.com', 'C@serta!23'))
@@ -9,15 +9,15 @@ def checkForProdCluster():
     clusterMetaData = {}
 
     for cluster in res.json()['clusters']:
-        if cluster['cluster_name'] == 'prod_cluster' and cluster['state'] == 'RUNNING':
+        if cluster['cluster_name'] == name and cluster['state'] == 'RUNNING':
             print 'found active prod cluster'
             clusterMetaData['cluster_name'] = cluster['cluster_name']
             clusterMetaData['cluster_id'] = cluster['cluster_id']
     return clusterMetaData
 
-def createCluster():
+def createCluster(name="prod_cluster", num_workers=9):
     postdata = {
-        "cluster_name": "prod_cluster",
+        "cluster_name": name,
         "spark_version": "2.0.x-scala2.10",
         "node_type_id": "r3.2xlarge",
         "spark_conf": {
@@ -31,10 +31,10 @@ def createCluster():
             {
                 "egg": "dbfs:/Users/production@aarp.com/Libraries/5308cbe8_469a_470e_ad6f_2b29d3f23ee6-aarpcommon_0_3_py2_7-67d2a.egg"},
         ],
-        "num_workers": 5
+        "num_workers": num_workers
     }
 
-    clusterMetaData = checkForProdCluster()
+    clusterMetaData = checkForProdCluster(name)
     if not clusterMetaData.has_key('cluster_name'):
         createClusterURL = "https://dbc-db50c5d5-5ae4.cloud.databricks.com/api/2.0/clusters/create"
         clusterResponse = requests.post(url=createClusterURL, auth=('production@aarp.com','C@serta!23'), json=postdata)
@@ -54,8 +54,8 @@ def createCluster():
     else:
         return clusterMetaData
 
-def destroyCluster():
-    clusterMetaData = checkForProdCluster()
+def destroyCluster(name='prod_cluster'):
+    clusterMetaData = checkForProdCluster(name)
     if clusterMetaData.has_key('cluster_name'):
         deleteClusterURL = "https://dbc-db50c5d5-5ae4.cloud.databricks.com/api/2.0/clusters/delete"
         deleteData = {"cluster_id": clusterMetaData['cluster_id']}
