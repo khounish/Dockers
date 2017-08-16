@@ -92,4 +92,3 @@ def extractTar():
             print e
             raise
 
-extractTar()
