@@ -24,7 +24,7 @@ def write_gzip(input_file):
         print e
         raise
 def extractTar():
-    home = '/Users/nareshkosgi/adobe-data'
+    home = '/data/adobe-data'
     s3_adobe_landing = "s3://aarp-landing/adobe/"
     s3_adobe_archive = "s3://aarp-archive/adobe/"
 
