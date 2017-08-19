@@ -1,4 +1,4 @@
-from aarp.common.utils import createCluster, monitorJob
+from aarp.common.utils import createCluster, monitorJob, destroyCluster
 from aarp.common.aarp_coco import PGInteraction
 from aarp.common.aarp_coco import Batch_Table as Batch
 import requests
@@ -44,10 +44,11 @@ def startAdobeLakeJob():
         print 'job launched successfully, will start monitoring'
         print res.json()
         monitorJob(str(res.json()['run_id']))
-
     else:
         raise ReferenceError(
             'The notebook id does not match the dobule_lake_click job name, please update job or notebook to match')
+
+    destroyCluster(name='adobe_job')
 
 
 def startUTCJob():
