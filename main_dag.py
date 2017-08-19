@@ -6,7 +6,7 @@ from airflow.operators.python_operator import PythonOperator
 
 from aarp.common.utils import createCluster
 from aarp.adobe.landing import extractTar
-from aarp.adobe.lake import startAdobeLakeJob
+from aarp.adobe.lake import startAdobeLakeJob, startUTCJob
 
 dag = DAG(
     dag_id='main_dag',
@@ -55,7 +55,14 @@ adobe2 = PythonOperator(
     dag=dag
 )
 
+adobe3 = PythonOperator(
+    task_id='adobe_UTC',
+    python_callable=startUTCJob,
+    dag=dag
+)
+
 adobe2.set_upstream(adobe1)
+adobe3.set_upstream(adobe2)
 # t2.set_upstream(t1)
 # t3.set_upstream(t1)
 # t4.set_upstream(t1)
