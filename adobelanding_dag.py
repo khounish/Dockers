@@ -4,7 +4,6 @@ from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
 
 from aarp.adobe.landing import extractTar
-from aarp.adobe.lake import startAdobeLakeJob
 
 dag = DAG(dag_id='adobe_landing_dag',
     start_date=datetime(2017,8,15),
@@ -17,12 +16,3 @@ t1 = PythonOperator(
     python_callable=extractTar,
     dag=dag
 )
-
-t2 = PythonOperator(
-    task_id='adobe_lake',
-    python_callable=startAdobeLakeJob,
-    dag=dag
-)
-
-t2.set_upstream(t1)
-
