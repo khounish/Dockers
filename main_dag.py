@@ -1,8 +1,10 @@
-from airflow import DAG
-from airflow.operators.python_operator import PythonOperator
-from airflow.operators.bash_operator import BashOperator
-from utils import createCluster
 from datetime import datetime
+
+from airflow import DAG
+from airflow.operators.bash_operator import BashOperator
+from airflow.operators.python_operator import PythonOperator
+
+from aarp.common.utils import createCluster
 
 dag = DAG(
     dag_id='main_dag',
