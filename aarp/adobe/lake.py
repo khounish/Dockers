@@ -1,20 +1,7 @@
 from aarp.common.utils import createCluster, monitorJob, destroyCluster
-from aarp.common.aarp_coco import PGInteraction
-from aarp.common.aarp_coco import Batch_Table as Batch
 import requests
 
-rs_host = 'aarp-rs-temp.c0vmann988mu.us-east-1.redshift.amazonaws.com'
-rs_user = 'cloud9'
-rs_password = 'Caserta123'
-rs_dbname = 'dev'
-rs_port = '5439'
-
 def startAdobeLakeJob():
-    pg = PGInteraction(rs_dbname, rs_host, rs_user, rs_password, rs_port)
-    batch = Batch(pg)
-    batchId, startTime = batch.start_batch()
-    print batchId
-    print startTime
     clusterMetaData = createCluster(name='adobe_job', num_workers=6)
     print clusterMetaData
     jobURL = "https://dbc-db50c5d5-5ae4.cloud.databricks.com/api/2.0/jobs/get?job_id=1884"
@@ -35,10 +22,6 @@ def startAdobeLakeJob():
     runURL = "https://dbc-db50c5d5-5ae4.cloud.databricks.com/api/2.0/jobs/run-now"
     runData = {
         "job_id": 1884,
-        "notebook_params": {
-            "etl_batch_id": batchId,
-            "etl_load_dt": startTime
-        }
     }
     res = requests.post(url=runURL, json=runData, auth=('production@aarp.com', 'C@serta!23'))
     if res.status_code == 200:
@@ -53,11 +36,6 @@ def startAdobeLakeJob():
 
 
 def startUTCJob():
-    pg = PGInteraction(rs_dbname, rs_host, rs_user, rs_password, rs_port)
-    batch = Batch(pg)
-    batchId, startTime = batch.start_batch()
-    print batchId
-    print startTime
     clusterMetaData = createCluster(name='adobe_job', num_workers=6)
     print clusterMetaData
     jobURL = "https://dbc-db50c5d5-5ae4.cloud.databricks.com/api/2.0/jobs/get?job_id=1697"
@@ -78,10 +56,6 @@ def startUTCJob():
     runURL = "https://dbc-db50c5d5-5ae4.cloud.databricks.com/api/2.0/jobs/run-now"
     runData = {
         "job_id": 1697,
-        "notebook_params": {
-            "etl_batch_id": batchId,
-            "etl_load_dt": startTime
-        }
     }
     res = requests.post(url=runURL, json=runData, auth=('production@aarp.com', 'C@serta!23'))
     if res.status_code == 200:
