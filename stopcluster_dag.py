@@ -1,7 +1,10 @@
-from utils import destroyCluster
 from datetime import datetime
+
 from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
+
+from aarp.common.utils import destroyCluster
+
 
 def shutdownUserCluster():
     destroyCluster(name='userCluster')

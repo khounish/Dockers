@@ -1,7 +1,10 @@
-from utils import createCluster
 from datetime import datetime
+
 from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
+
+from aarp.common.utils import createCluster
+
 
 def createUserCluster():
     createCluster(name="userCluster")
