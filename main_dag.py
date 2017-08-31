@@ -8,6 +8,7 @@ from aarp.common.utils import createCluster
 from aarp.adobe.landing import extractTar
 from aarp.adobe.lake import startAdobeLakeJob, startUTCJob
 
+# adding customised parameters
 dag = DAG(
     dag_id='main_dag',
     start_date=datetime(2017,6,15),
