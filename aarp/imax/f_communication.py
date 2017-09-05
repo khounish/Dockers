@@ -11,7 +11,7 @@ def startFcomLakeJob():
       "existing_cluster_id":clusterMetaData['clusterid'],
       "timeout_seconds": 3600,
       "notebook_task": {
-        "notebook_path": "/Users/swapnil.prabhu@casertaconcepts.com/fcom/fcom_landing_ingest",
+        "notebook_path": airflow_environment['imax']['fcom']['notebook_path'],
         "base_parameters":{"pathDataLakeImax":airflow_environment['imax']['fcom']['pathDataLakeImax'],"pathLandingImax":airflow_environment['imax']['fcom']['pathLandingImax']}
       }
     }
@@ -24,7 +24,8 @@ def startFcomLakeJob():
 
     print(runid)
 	
-    url = "https://dbc-db50c5d5-5ae4.cloud.databricks.com/api/2.0/jobs/runs/get?run_id="+runid
+   
+   url = "https://dbc-db50c5d5-5ae4.cloud.databricks.com/api/2.0/jobs/runs/get?run_id="+runid
     res = requests.get(url, auth=('production@aarp.com','C@serta!23'))
 
 	if res.status_code == 200:
