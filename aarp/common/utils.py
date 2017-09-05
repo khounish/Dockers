@@ -92,3 +92,12 @@ def monitorJob(run_id):
             raise StandardError("Job Failed")
     else:
         raise LookupError("Could not find a job with run_id "+str(run_id)+"monitoring the job failed")
+
+def loadEnvVariables():
+    with open('config.properties') as json_data:
+    data=json.load(json_data)
+	#This will be replaced by env variable
+    airflow_environment=data['DEV']
+    #print airflow_environment
+	return airflow_environment
+
