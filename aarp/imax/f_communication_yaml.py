@@ -11,8 +11,8 @@ def startFcomLakeJob():
       "existing_cluster_id":clusterMetaData['clusterid'],
       "timeout_seconds": 3600,
       "notebook_task": {
-        "notebook_path": airflow_environment['imax']['fcom']['notebook_path'],
-        "base_parameters":{"pathDataLakeImax":airflow_environment['imax']['fcom']['pathDataLakeImax'],"pathLandingImax":airflow_environment['imax']['fcom']['pathLandingImax']}
+        "notebook_path": airflow_yaml_environment['imax']['fcom']['notebook_path'],
+        "base_parameters":{"pathDataLakeImax":airflow_yaml_environment['imax']['fcom']['pathDataLakeImax'],"pathLandingImax":airflow_yaml_environment['imax']['fcom']['pathLandingImax']}
       }
     }
 
