@@ -64,6 +64,10 @@ adobe3 = PythonOperator(
 
 adobe2.set_upstream(adobe1)
 adobe3.set_upstream(adobe2)
+#####  Below part is added by khounish for testing configurable items
+
+
+
 # t2.set_upstream(t1)
 # t3.set_upstream(t1)
 # t4.set_upstream(t1)
