@@ -8,6 +8,7 @@ from aarp.common.utils import createCluster
 from aarp.adobe.landing import extractTar
 from aarp.adobe.lake import startAdobeLakeJob, startUTCJob
 
+# adding customised parameters
 dag = DAG(
     dag_id='main_dag',
     start_date=datetime(2017,6,15),
@@ -63,6 +64,10 @@ adobe3 = PythonOperator(
 
 adobe2.set_upstream(adobe1)
 adobe3.set_upstream(adobe2)
+#####  Below part is added by khounish for testing configurable items
+
+
+
 # t2.set_upstream(t1)
 # t3.set_upstream(t1)
 # t4.set_upstream(t1)
