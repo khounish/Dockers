@@ -1,6 +1,7 @@
 import requests
 from time import sleep
 import yaml
+import os
 
 def checkForProdCluster(name):
     url = "https://dbc-db50c5d5-5ae4.cloud.databricks.com/api/2.0/clusters/list"
@@ -104,10 +105,17 @@ def loadEnvVariables():
 
 def loadYAMLEnvVariables():
     with open('dagconfig.yaml') as yaml_data:
-    data=yaml.load(yaml_data)
+    datayaml=yaml.load(yaml_data)
+	airflow_zone= os.environ['airflow_zone']
+	if airflow_zone == 'DEV':
 	#This will be replaced by env variable
-    airflow_environment=data['DEV']
+     airflow_yaml_environment=datayaml['DEV']
+	elif airflow_zone == 'PRODUCTION':
+	airflow_yaml_environment=datayaml['PRODUCTION']
+	else:
+	airflow_yaml_environment=datayaml['QA']
     #print airflow_environment
-	return airflow_environment
+	
+	return airflow_yaml_environment
 
 
