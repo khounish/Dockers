@@ -7,6 +7,14 @@ from airflow.operators.python_operator import PythonOperator
 from aarp.common.utils import createCluster
 from aarp.adobe.landing import extractTar
 from aarp.adobe.lake import startAdobeLakeJob, startUTCJob
+from aarp.r4g.r4gingest import import filelanding,checkclusterstatus,jobrun
+
+import yaml
+
+
+with open('aarp/r4g/r4gingest.yaml') as f:
+        CONFIG = yaml.load(f)
+f.close()
 
 # adding customised parameters
 dag = DAG(
@@ -62,8 +70,135 @@ adobe3 = PythonOperator(
     dag=dag
 )
 
+r4g1 = PythonOperator(
+    task_id='r4g_file_landing',
+    python_callable=filelanding,
+    dag=dag
+)
+
+r4g2 = PythonOperator(
+    task_id='r4g_check_cluster',
+    python_callable=checkclusterstatus,
+    dag=dag
+)
+
+
+jobrunjson = {
+    "clusterid":r4g2.python_callable,
+    "filetype" : CONFIG['localfile'],
+    "schemaname":CONFIG['localschema']
+    }
+
+r4g_job1 = PythonOperator(
+    task_id='jobrun_task3',
+    python_callable=jobrun(jobrunjson),
+    dag = dag
+)
+
+jobrunjson = {
+    "clusterid":r4g2.python_callable,
+    "filetype" :CONFIG['auctionfile'],
+    "schemaname":CONFIG['auctionschema']
+    }
+
+r4g_job2 = PythonOperator(
+    task_id='jobrun_task4',
+    python_callable=jobrun(jobrunjson),
+    dag = dag
+)
+
+
+jobrunjson = {
+    "clusterid":r4g2.python_callable,
+    "filetype" : CONFIG['merchfile'],
+    "schemaname":CONFIG['merchschema']
+    }
+
+r4g_job3 = PythonOperator(
+    task_id='jobrun_task5',
+    python_callable=jobrun(jobrunjson),
+    dag = dag
+)
+
+
+jobrunjson = {
+    "clusterid":r4g2.python_callable,
+    "filetype" : CONFIG['pointfile'],
+    "schemaname":CONFIG['pointschema']
+    }
+
+r4g_job4 = PythonOperator(
+    task_id='jobrun_task6',
+    python_callable=jobrun(jobrunjson),
+    dag = dag
+)
+
+jobrunjson = {
+    "clusterid":r4g2.python_callable,
+    "filetype" : CONFIG['promofile'],
+    "schemaname":CONFIG['promoschema']
+    }
+
+r4g_job5 = PythonOperator(
+    task_id='jobrun_task7',
+    python_callable=jobrun(jobrunjson),
+    dag = dag
+)
+
+
+jobrunjson = {
+    "clusterid":r4g2.python_callable,
+    "filetype" : CONFIG['regfile'],
+    "schemaname":CONFIG['regschema']
+    }
+
+r4g_job6 = PythonOperator(
+    task_id='jobrun_task8',
+    python_callable=jobrun(jobrunjson),
+    dag = dag
+)
+
+
+jobrunjson = {
+    "clusterid":r4g2.python_callable,
+    "filetype" : CONFIG['sweepile'],
+    "schemaname":CONFIG['sweepschema']
+    }
+
+r4g_job7 = PythonOperator(
+    task_id='jobrun_task9',
+    python_callable=jobrun(jobrunjson),
+    dag = dag
+)
+
+jobrunjson = {
+    "clusterid":r4g2.python_callable,
+    "filetype" : CONFIG['travelfile'],
+    "schemaname":CONFIG['travelschema']
+    }
+
+r4g_job8 = PythonOperator(
+    task_id='jobrun_task10',
+    python_callable=jobrun(jobrunjson),
+    dag = dag
+)
+
+
 adobe2.set_upstream(adobe1)
 adobe3.set_upstream(adobe2)
+
+r4g2.set_upstream(r4g1)
+
+r4g_job1.set_upstream(r4g2)
+r4g_job2.set_upstream(r4g2)
+r4g_job3.set_upstream(r4g2)
+r4g_job4.set_upstream(r4g2)
+r4g_job5.set_upstream(r4g2)
+r4g_job6.set_upstream(r4g2)
+r4g_job7.set_upstream(r4g2)
+r4g_job8.set_upstream(r4g2)
+
+
 #####  Below part is added by khounish for testing configurable items
 
 
