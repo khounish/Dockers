@@ -5,18 +5,13 @@ from airflow.operators.python_operator import PythonOperator
 import pysftp as sftp
 import requests
 import json, yaml
+from aarp.common.utils import loadYAMLEnvVariables
+
+CONFIG=loadEnvVariables()['r4g']
 
 
 def filelanding():
-    #airflow_env=loadEnvVariables()
-    
-    
-    with open('r4gingest.yaml') as f:
-        CONFIG = yaml.load(f)
-    f.close()
-    
     s = sftp.Connection(host=CONFIG['host'],username=CONFIG['ingestuser'],password=CONFIG['ingestpwd'])
-
     localpath = CONFIG['localpath']
 
     remote_dir = CONFIG['remotedir']
@@ -36,72 +31,20 @@ def filelanding():
     print("Files downloaded Successfully!")
     s.close()
 
-
-def checkclusterstatus(clusterid):
-    with open('r4gingest.yaml') as f:
-        CONFIG = yaml.load(f)
-    f.close()
-    clusterstatus = ""
-    postdata = {
-        "cluster_id": clusterid
-        }
-    url = "https://dbc-db50c5d5-5ae4.cloud.databricks.com/api/2.0/clusters/get"
-
-    while clusterstatus != "RUNNING" and clusterstatus != "TERMINATED":
-        res = requests.get(url, auth=(CONFIG['user'],CONFIG['pwd']),params=postdata)
-
-        json_data = json.loads(res.text)
-        clusterstatus = json_data["state"]
-        print(clusterstatus)
-
-    if clusterstatus == "TERMINATED":
-        urlstart = "https://dbc-db50c5d5-5ae4.cloud.databricks.com/api/2.0/clusters/start"
-        res = requests.post(urlstart, auth=(CONFIG['user'],CONFIG['pwd']),json = {"cluster_id":clusterid})
-        while clusterstatus != "RUNNING":
-            res = requests.get(url, auth=(CONFIG['user'],CONFIG['pwd']),params=postdata)
-        json_data = json.loads(res.text)
-            clusterstatus = json_data["state"]
-            print(clusterstatus)
-
-        return clusterid
-    else:
-        return clusterid
-    
-
-
-def jobrun(paramjson):
+def jobrun(jobname):
     print(paramjson["clusterid"])
-    
-    with open('r4gingest.yaml') as f:
-        CONFIG = yaml.load(f)
-    f.close()
-    
+      
     postdata = {
-      "run_name": "airflow_test_job",
+      "run_name": "r4g_job_"+jobname,
       "existing_cluster_id":paramjson["clusterid"],
-      "timeout_seconds": CONFIG['timeoutsecs'],
+      "timeout_seconds": CONFIG["r4g"]['timeoutsecs'],
       "notebook_task": {
-        "notebook_path": CONFIG['notebookpath'],
-        "base_parameters":{"file_type":paramjson["filetype"],"schema_file_name":paramjson["schemaname"]}
+        "notebook_path": CONFIG["r4g"]['notebookpath'],
+        "base_parameters":{"file_type":CONFIG["r4g"][jobname]['file'],"schema_file_name":CONFIG["r4g"][jobname]['schema']}
       }
     }
-
     url = "https://dbc-db50c5d5-5ae4.cloud.databricks.com/api/2.0/jobs/runs/submit"
-    res = requests.post(url, auth=(CONFIG['user'],CONFIG['pwd']), json=postdata)
-    
-    json_data = json.loads(res.text)
-    runid = json_data["run_id"]
-
+    res = requests.post(url, auth=(CONFIG["r4g"]['user'],CONFIG["r4g"]['pwd']), json=postdata)
+    runid = json.loads(res.text)["run_id"]
     print(runid)
-
-    postdata = {
-            "run_id": runid
-            }
-
-    url = "https://dbc-db50c5d5-5ae4.cloud.databricks.com/api/2.0/jobs/runs/get"
-    res = requests.get(url, auth=(CONFIG['user'],CONFIG['pwd']),params=postdata)
-    print(res.content)
-
-
-
-
+    monitorJob(runid)

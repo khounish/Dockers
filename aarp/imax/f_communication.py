@@ -24,8 +24,7 @@ def startFcomLakeJob():
 
     print(runid)
 	
-   
-   url = "https://dbc-db50c5d5-5ae4.cloud.databricks.com/api/2.0/jobs/runs/get?run_id="+runid
+    url = "https://dbc-db50c5d5-5ae4.cloud.databricks.com/api/2.0/jobs/runs/get?run_id="+runid
     res = requests.get(url, auth=('production@aarp.com','C@serta!23'))
 
 	if res.status_code == 200:

@@ -107,15 +107,8 @@ def loadYAMLEnvVariables():
     with open('dagconfig.yaml') as yaml_data:
     datayaml=yaml.load(yaml_data)
 	airflow_zone= os.environ['airflow_zone']
-	if airflow_zone == 'DEV':
-	#This will be replaced by env variable
-     airflow_yaml_environment=datayaml['DEV']
-	elif airflow_zone == 'PRODUCTION':
-	airflow_yaml_environment=datayaml['PRODUCTION']
-	else:
-	airflow_yaml_environment=datayaml['QA']
-    #print airflow_environment
-	
+    airflow_yaml_environment=datayaml[airflow_zone]
+    print airflow_environment
 	return airflow_yaml_environment
 
 
