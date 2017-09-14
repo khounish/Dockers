@@ -7,11 +7,13 @@ import requests
 import json, yaml
 from aarp.common.utils import loadYAMLEnvVariables
 
-CONFIG=loadEnvVariables()
+#CONFIG=loadEnvVariables()
+CONFIG=loadYAMLEnvVariables()
 clusterid=checkForProdCluster(CONFIG['cluster_name'])
 
 if clusterid['cluster_id'] is null:
-	clusterid=clusteridcreate(CONFIG['cluster_name'])
+	#clusterid=clusteridcreate(CONFIG['cluster_name'])
+	clusterid=createCluster(CONFIG['cluster_name'])
 	
 def filelanding():
     s = sftp.Connection(host=CONFIG['r4g']['host'],username=CONFIG['r4g']['ingestuser'],password=CONFIG['r4g']['ingestpwd'])
