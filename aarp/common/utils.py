@@ -104,7 +104,7 @@ def loadEnvVariables():
 	return airflow_environment
 
 def loadYAMLEnvVariables():
-    with open('dagconfig.yaml') as yaml_data:
+    with open(os.path.abspath('dagconfig.yaml')) as yaml_data:
     datayaml=yaml.load(yaml_data)
 	airflow_zone= os.environ['airflow_zone']
     airflow_yaml_environment=datayaml[airflow_zone]
