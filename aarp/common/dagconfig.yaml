@@ -13,6 +13,8 @@ DEV:
        patharchivefcom: "imax/f_communication/"
        landing_notebook_path: "/Users/swapnil.prabhu@casertaconcepts.com/fcom/fcom_devlanding_ingest"
        rs_notebook_path: "/Users/swapnil.prabhu@casertaconcepts.com/fcom/fcom_devlanding_ingest"
+       user=""
+       pwd=""
     mnthlyscores:
        pathDataLakescores: "imax/m_scores/"
        pathLandingscores: "imax/mnthly_SCORES/"
@@ -58,12 +60,16 @@ PRODUCTION:
   archivalPath: "/mnt/archive/"
   imax:
     fcom:
-       pathDataLakeImax: "imax/"
-       pathLandingImax: "imax/"
+       pathDataLakefcom: "imax/"
+       pathLandingfcom: "imax/"
        notebook_path: "/Users/swapnil.prabhu@casertaconcepts.com/fcom/fcom_prodlanding_ingest"
+       user: ""
+       pwd: ""
+       landing_notebook_path: "/Users/swapnil.prabhu@casertaconcepts.com/fcom/fcom_devlanding_ingest"
+       rs_notebook_path: "/Users/swapnil.prabhu@casertaconcepts.com/fcom/fcom_devlanding_ingest"
     mnthlyscores:
-       pathDataLakeImax: "imax/m_scores/"
-       pathLandingImax: "imax/mnthly_SCORES/"
+       pathDataLakescores: "imax/m_scores/"
+       pathLandingscores: "imax/mnthly_SCORES/"
        notebook_path: "/Users/swapnil.prabhu@casertaconcepts.com/fcom/fcom_devlanding_ingest"
   r4g:  
     localpath: /dev/aarp-landing/R4G/R4G-Airflow
