@@ -4,13 +4,15 @@ from datetime import datetime , timedelta
 from airflow.operators.python_operator import PythonOperator
 import requests
 import json, yaml
-from aarp.common.utils import loadYAMLEnvVariables,checkForProdCluster,clusteridcreate
+from aarp.common.utils import loadYAMLEnvVariables,checkForProdCluster,createCluster
 
-CONFIG=loadEnvVariables()
+#CONFIG=loadEnvVariables()
+CONFIG=loadYAMLEnvVariables()
 clusterid=checkForProdCluster(CONFIG['cluster_name'])
 
 if clusterid['cluster_id'] is null:
-	clusterid=clusteridcreate(CONFIG['cluster_name'])
+	#clusterid=clusteridcreate(CONFIG['cluster_name'])
+	clusterid=createCluster(CONFIG['cluster_name'])
 
 
 def fcomlanding:     
@@ -18,7 +20,7 @@ def fcomlanding:
       "run_name": "fcom_landing",
       "existing_cluster_id":clusterid['cluster_id'],
       "notebook_task": {
-        "notebook_path": CONFIG['landing_notebook_path'],
+        "notebook_path": CONFIG['imax']['fcom']['landing_notebook_path'],
         "base_parameters":{"pathDataLakeImax":CONFIG['imax']['fcom']['pathDataLakefcom'],"pathLandingImax":CONFIG['imax']['fcom']["pathLandingfcom"]}
       }
     }
