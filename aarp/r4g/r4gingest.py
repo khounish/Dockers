@@ -7,14 +7,17 @@ import requests
 import json, yaml
 from aarp.common.utils import loadYAMLEnvVariables
 
-CONFIG=loadEnvVariables()['r4g']
+CONFIG=loadEnvVariables()
+clusterid=checkForProdCluster(CONFIG['cluster_name'])
 
-
+if clusterid['cluster_id'] is null:
+	clusterid=clusteridcreate(CONFIG['cluster_name'])
+	
 def filelanding():
-    s = sftp.Connection(host=CONFIG['host'],username=CONFIG['ingestuser'],password=CONFIG['ingestpwd'])
-    localpath = CONFIG['localpath']
+    s = sftp.Connection(host=CONFIG['r4g']['host'],username=CONFIG['r4g']['ingestuser'],password=CONFIG['r4g']['ingestpwd'])
+    localpath = CONFIG['r4g']['localpath']
 
-    remote_dir = CONFIG['remotedir']
+    remote_dir = CONFIG['r4g']['remotedir']
 
     filelist = s.listdir(remote_dir)
 
@@ -31,12 +34,10 @@ def filelanding():
     print("Files downloaded Successfully!")
     s.close()
 
-def jobrun(jobname):
-    print(paramjson["clusterid"])
-      
+def jobrun(jobname):    
     postdata = {
       "run_name": "r4g_job_"+jobname,
-      "existing_cluster_id":paramjson["clusterid"],
+      "existing_cluster_id":clusterid['cluster_id'],
       "timeout_seconds": CONFIG["r4g"]['timeoutsecs'],
       "notebook_task": {
         "notebook_path": CONFIG["r4g"]['notebookpath'],
