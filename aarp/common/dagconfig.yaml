@@ -52,7 +52,7 @@ DEV:
 
 PRODUCTION:
   submiturl : "https://dbc-db50c5d5-5ae4.cloud.databricks.com/prodapi/2.0/"
-  cluster_name: "dev_cluster"
+  cluster_name: "prod_cluster"
   landingPath: "/mnt/landing/"
   datalakePath: "/mnt/datalake/"
   archivalPath: "/mnt/archive/"
@@ -99,7 +99,7 @@ PRODUCTION:
          schema: "Travel_schema.json"
 QA:
   submiturl : "https://dbc-db50c5d5-5ae4.cloud.databricks.com/qaapi/2.0/"
-  cluster_name: "prod_cluster"
+  cluster_name: "qa_cluster"
   landingPath: ""
   datalakePath: ""
   archivalPath: ""

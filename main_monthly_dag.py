@@ -9,7 +9,7 @@ from aarp.mnthlyscores.mnthlyscores import mnthlyscores
 # adding customised parameters
 dag = DAG(
     dag_id='main_dag',
-    start_date=datetime(2017,6,15),
+    start_date=datetime(2017,9,15),
     catchup= False,
     schedule_interval='@mnthly')
 
