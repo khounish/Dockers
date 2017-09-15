@@ -6,15 +6,14 @@ DEV:
   archivalPath: "/mnt/testing/archive/"
   user: "production@aarp.com"
   pwd: "C@serta!23"
+  rs_schema:"dev"
   imax:
     fcom:
        pathDataLakefcom: "imax/f_communication/"
        pathLandingfcom: "imax/f_communication/"
        patharchivefcom: "imax/f_communication/"
-       landing_notebook_path: "/Users/swapnil.prabhu@casertaconcepts.com/fcom/fcom_devlanding_ingest"
-       rs_notebook_path: "/Users/swapnil.prabhu@casertaconcepts.com/fcom/fcom_devlanding_ingest"
-       user=""
-       pwd=""
+       landing_notebook_path: "/Users/swapnil.prabhu@casertaconcepts.com/fcom/fcom_landing_ingest"
+       rs_notebook_path: "/Users/swapnil.prabhu@casertaconcepts.com/fcom/fcom_landing_ingest"
     mnthlyscores:
        pathDataLakescores: "imax/m_scores/"
        pathLandingscores: "imax/mnthly_SCORES/"
@@ -58,6 +57,9 @@ PRODUCTION:
   landingPath: "/mnt/landing/"
   datalakePath: "/mnt/datalake/"
   archivalPath: "/mnt/archive/"
+  user: "production@aarp.com"
+  pwd: "C@serta!23"
+  rs_schema:"public"
   imax:
     fcom:
        pathDataLakefcom: "imax/"

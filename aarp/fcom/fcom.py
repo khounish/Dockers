@@ -6,12 +6,10 @@ import requests
 import json, yaml
 from aarp.common.utils import loadYAMLEnvVariables,checkForProdCluster,createCluster
 
-#CONFIG=loadEnvVariables()
 CONFIG=loadYAMLEnvVariables()
 clusterid=checkForProdCluster(CONFIG['cluster_name'])
 
 if clusterid['cluster_id'] is null:
-	#clusterid=clusteridcreate(CONFIG['cluster_name'])
 	clusterid=createCluster(CONFIG['cluster_name'])
 
 
