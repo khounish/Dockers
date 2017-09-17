@@ -16,7 +16,7 @@ def checkForProdCluster(name):
             clusterMetaData['cluster_id'] = cluster['cluster_id']
     return clusterMetaData
 
-def createCluster(name="prod_cluster", num_workers=9):
+def createCluster(name="prod_cluster", num_workers=9, production=False):
     postdata = {
         "cluster_name": name,
         "spark_version": "2.0.x-scala2.10",
@@ -34,6 +34,10 @@ def createCluster(name="prod_cluster", num_workers=9):
         ],
         "num_workers": num_workers
     }
+    if production:
+        postdata['instance_profile_arn'] = 'arn:aws:iam::148546933577:instance-profile/databricks_cluster_role'
+    else:
+        postdata['instance_profile_arn'] = 'arn:aws:iam::148546933577:instance-profile/userCluster'
 
     clusterMetaData = checkForProdCluster(name)
     if not clusterMetaData.has_key('cluster_name'):
@@ -94,20 +98,22 @@ def monitorJob(run_id):
     else:
         raise LookupError("Could not find a job with run_id "+str(run_id)+"monitoring the job failed")
 
-def loadEnvVariables():
-    with open('config.properties') as json_data:
-    data=json.load(json_data)
-	#This will be replaced by env variable
-    airflow_environment=data['DEV']
-    #print airflow_environment
-	return airflow_environment
-
-def loadYAMLEnvVariables():
-    with open('dagconfig.yaml') as yaml_data:
-    data=yaml.load(yaml_data)
-	#This will be replaced by env variable
-    airflow_environment=data['DEV']
-    #print airflow_environment
-	return airflow_environment
+# def loadEnvVariables():
+#     with open('config.properties') as json_data:
+#         data=json.load(json_data)
+#         json_data.close()
+# 	#This will be replaced by env variable
+#     airflow_environment=data['DEV']
+#     #print airflow_environment
+# 	return airflow_environment
+#
+# def loadYAMLEnvVariables():
+#     with open('dagconfig.yaml') as yaml_data:
+#         data=yaml.load(yaml_data)
+#         yaml_data.close()
+# 	#This will be replaced by env variable
+#     airflow_environment=data['DEV']
+#     #print airflow_environment
+# 	return airflow_environment
 
 
