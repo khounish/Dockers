@@ -2,7 +2,7 @@ from aarp.common.utils import createCluster, monitorJob, destroyCluster
 import requests
 
 def startAdobeLakeJob():
-    clusterMetaData = createCluster(name='adobe_job', num_workers=6)
+    clusterMetaData = createCluster(name='adobe_job', num_workers=6, production=True)
     print clusterMetaData
     jobURL = "https://dbc-db50c5d5-5ae4.cloud.databricks.com/api/2.0/jobs/get?job_id=1884"
     res = requests.get(url=jobURL, auth=('production@aarp.com', 'C@serta!23'))

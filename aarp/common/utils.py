@@ -35,10 +35,11 @@ def createCluster(name="prod_cluster", num_workers=9, production=False):
         "num_workers": num_workers
     }
     if production:
-        postdata['instance_profile_arn'] = 'arn:aws:iam::148546933577:instance-profile/databricks_cluster_role'
+        postdata['aws_attributes']['instance_profile_arn'] = 'arn:aws:iam::148546933577:instance-profile/databricks_cluster_role'
     else:
-        postdata['instance_profile_arn'] = 'arn:aws:iam::148546933577:instance-profile/userCluster'
+        postdata['aws_attributes']['instance_profile_arn'] = 'arn:aws:iam::148546933577:instance-profile/userCluster'
 
+    print postdata
     clusterMetaData = checkForProdCluster(name)
     if not clusterMetaData.has_key('cluster_name'):
         createClusterURL = "https://dbc-db50c5d5-5ae4.cloud.databricks.com/api/2.0/clusters/create"
