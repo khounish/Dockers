@@ -6,18 +6,18 @@ DEV:
   archivalPath: "/mnt/testing/archive/"
   user: "production@aarp.com"
   pwd: "C@serta!23"
-  rs_schema:"dev"
+  rsSchema:"dev"
   imax:
     fcom:
        pathDataLakefcom: "imax/f_communication/"
        pathLandingfcom: "imax/f_communication/"
        patharchivefcom: "imax/f_communication/"
-       landing_notebook_path: "/Users/swapnil.prabhu@casertaconcepts.com/fcom/fcom_landing_ingest"
-       rs_notebook_path: "/Users/swapnil.prabhu@casertaconcepts.com/fcom/fcom_landing_ingest"
+       landingNotebookPath: "/Users/swapnil.prabhu@casertaconcepts.com/fcom/fcom_landing_ingest"
+       rsNotebookPath: "/Users/swapnil.prabhu@casertaconcepts.com/fcom/fcom_rs_load"
     mnthlyscores:
        pathDataLakescores: "imax/m_scores/"
        pathLandingscores: "imax/mnthly_SCORES/"
-       notebook_path: "/Users/swapnil.prabhu@casertaconcepts.com/fcom/fcom_devlanding_ingest"
+       notebookPath: "/Users/swapnil.prabhu@casertaconcepts.com/scores/scores_landing_ingest"
   r4g:  
     localpath: /dev/aarp-landing/R4G/R4G-Airflow
     remotedir: /R4G
@@ -59,20 +59,18 @@ PRODUCTION:
   archivalPath: "/mnt/archive/"
   user: "production@aarp.com"
   pwd: "C@serta!23"
-  rs_schema:"public"
+  rsSchema:"public"
   imax:
     fcom:
-       pathDataLakefcom: "imax/"
-       pathLandingfcom: "imax/"
-       notebook_path: "/Users/swapnil.prabhu@casertaconcepts.com/fcom/fcom_prodlanding_ingest"
-       user: ""
-       pwd: ""
-       landing_notebook_path: "/Users/swapnil.prabhu@casertaconcepts.com/fcom/fcom_devlanding_ingest"
-       rs_notebook_path: "/Users/swapnil.prabhu@casertaconcepts.com/fcom/fcom_devlanding_ingest"
+       pathDataLakefcom: "imax/f_communication/"
+       pathLandingfcom: "imax/f_communication/"
+       patharchivefcom: "imax/f_communication/"
+       landingNotebookPath: "/Users/production@aarp.com/fcom/fcom_devlanding_ingest"
+       rsNotebookPath: "/Users/production@aarp.com/fcom/fcom_devlanding_ingest"
     mnthlyscores:
        pathDataLakescores: "imax/m_scores/"
        pathLandingscores: "imax/mnthly_SCORES/"
-       notebook_path: "/Users/swapnil.prabhu@casertaconcepts.com/fcom/fcom_devlanding_ingest"
+       notebookPath: "/Users/production@aarp.com/scores/scores_landing_ingest"
   r4g:  
     localpath: /dev/aarp-landing/R4G/R4G-Airflow
     remotedir: /R4G
@@ -105,52 +103,3 @@ PRODUCTION:
     travel:
          file: "TRAVELBOOKINGS"
          schema: "Travel_schema.json"
-QA:
-  submiturl : "https://dbc-db50c5d5-5ae4.cloud.databricks.com/qaapi/2.0/"
-  cluster_name: "qa_cluster"
-  landingPath: ""
-  datalakePath: ""
-  archivalPath: ""
-  imax:
-    fcom:
-       pathDataLakeImax: "/mnt/datalake/qaimax/"
-       pathLandingImax: "/mnt/landing/qaimax/"
-       notebook_path: "/Users/swapnil.prabhu@casertaconcepts.com/fcom/fcom_qalanding_ingest"
-    mnthlyscores:
-       pathDataLakeImax: "imax/m_scores/"
-       pathLandingImax: "imax/mnthly_SCORES/"
-       notebook_path: "/Users/swapnil.prabhu@casertaconcepts.com/fcom/fcom_devlanding_ingest"
-  r4g:  
-    localpath: /dev/aarp-landing/R4G/R4G-Airflow
-    remotedir: /R4G
-    host: "ftp2.omniture.com"
-    user: "production@aarp.com"
-    pwd: "C@serta!23"
-    timeoutsecs: 3600
-    notebookpath: "/Users/production@aarp.com/R4G/R4G_Lake"
-    local:
-         file: "LOCALOFFERS"
-         schema: "LocalOffers_schema.json"
-    auction:
-         file: "AUCTIONUSAGE"
-         schema: "Auctions_schema.json"
-    merch:
-         file: "MERCHANDISEUSAGE"
-         schema: "Merchandise_schema.json"
-    point:
-         file: "POINTDEPOSITS"
-         schema: "PointDeposits_schema.json"
-    promo:
-         file: "PROMOCODEUSAGE"
-         schema: "PromoCodeUsage_schema.json"
-    reg:
-         file: "REGISTRATIONS"
-         schema: "Registrations_schema.json"
-    sweep:
-         file: "SWEEPSTAKEUSAGE"
-         schema: "Sweeptstakes_schema.json"
-    travel:
-         file: "TRAVELBOOKINGS"
-         schema: "Travel_schema.json"
-
-

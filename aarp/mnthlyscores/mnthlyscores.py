@@ -6,12 +6,10 @@ import requests
 import json, yaml
 from aarp.common.utils import loadYAMLEnvVariables,checkForProdCluster,createCluster
 
-#CONFIG=loadEnvVariables()
 CONFIG=loadYAMLEnvVariables()
 clusterid=checkForProdCluster(CONFIG['cluster_name'])
 
 if clusterid['cluster_id'] is null:
-	#clusterid=clusteridcreate(CONFIG['cluster_name'])
 	clusterid=createCluster(CONFIG['cluster_name'])
 
 def mnthlyscores():     
@@ -19,7 +17,7 @@ def mnthlyscores():
       "run_name": "mnthlyscores",
       "existing_cluster_id":clusterid['cluster_id'],
       "notebook_task": {
-        "notebook_path": CONFIG['imax']['mnthlyscores']['notebook_path'],
+        "notebook_path": CONFIG['imax']['mnthlyscores']['notebookPath'],
         "base_parameters":{"pathDataLakeImax":CONFIG['imax']['mnthlyscores']['pathDataLakescores'],"pathLandingImax":CONFIG['imax']['mnthlyscores']["pathDataLakescores"]}
       }
     }

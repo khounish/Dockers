@@ -18,7 +18,7 @@ def fcomlanding:
       "run_name": "fcom_landing",
       "existing_cluster_id":clusterid['cluster_id'],
       "notebook_task": {
-        "notebook_path": CONFIG['imax']['fcom']['landing_notebook_path'],
+        "notebook_path": CONFIG['imax']['fcom']['landingNotebookPath'],
         "base_parameters":{"pathDataLakeImax":CONFIG['imax']['fcom']['pathDataLakefcom'],"pathLandingImax":CONFIG['imax']['fcom']["pathLandingfcom"]}
       }
     }
@@ -35,7 +35,7 @@ def fcomrsload:
       "run_name": "fcomrsload",
       "existing_cluster_id":clusterid['cluster_id'],
       "notebook_task": {
-        "notebook_path": CONFIG['imax']['fcom']['rs_notebook_path'],
+        "notebook_path": CONFIG['imax']['fcom']['rsNotebookPath'],
         "base_parameters":{"pathDataLakeImax":CONFIG['imax']['fcom']['pathDataLakefcom'],"pathLandingImax":CONFIG['imax']['fcom']["pathLandingfcom"]}
       }
     }
