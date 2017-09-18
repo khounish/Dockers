@@ -96,7 +96,7 @@ def monitorJob(run_id):
         raise LookupError("Could not find a job with run_id "+str(run_id)+"monitoring the job failed")
 
 def loadYAMLEnvVariables():
-    with open(os.path.abspath('dagconfig.yaml')) as yaml_data:
+    with open(os.path.abspath('/data/airflow/dags/dagconfig.yaml')) as yaml_data:
     datayaml=yaml.load(yaml_data)
 	airflow_zone= os.environ['airflow_zone']
     airflow_yaml_environment=datayaml[airflow_zone]
