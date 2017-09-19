@@ -7,16 +7,30 @@ from airflow.operators.python_operator import PythonOperator
 from aarp.common.utils import createCluster
 from aarp.adobe.landing import extractTar
 from aarp.adobe.lake import startAdobeLakeJob, startUTCJob
-from aarp.r4g.r4gingest import filelanding,checkclusterstatus,jobrun
+#from aarp.r4g.r4gingest import filelanding,checkclusterstatus,jobrun
+from aarp.r4g.r4gingest import filelanding,jobrun
 from aarp.fcom.fcom import fcomlanding,fcomrsload
 
+from datetime import datetime, timedelta
+
+# Following are defaults which can be overridden later on
+default_args = {
+    'owner': 'airflow',
+    'depends_on_past': False,
+    'start_date': datetime(2016, 4, 15),
+    'email': ['swapnilspra@gmail.com'],
+    'email_on_failure': False,
+    'email_on_retry': False,
+    'retries': 1,
+    'retry_delay': timedelta(minutes=1),
+}
 
 
 # adding customised parameters
 dag = DAG(
-    dag_id='main_dag',
+    dag_id='main_dag',default_args=default_args,
     start_date=datetime(2017,9,15),
-    catchup= False,
+    #catchup= False,
     schedule_interval='@daily')
 
 adobe1 = PythonOperator(
@@ -43,12 +57,12 @@ r4g_ingest = PythonOperator(
     dag=dag
 )
 
-r4g_local = PythonOperator(
-    task_id='r4g_local',
-    python_callable=jobrun('local'),
-    dag = dag
-)
-
+"""
+#r4g_local = PythonOperator(
+ #   task_id='r4g_local',
+  #  python_callable=jobrun('local'),
+   # dag = dag
+#)
 r4g_auction = PythonOperator(
     task_id='r4g_auction',
     python_callable=jobrun('auction'),
@@ -96,7 +110,7 @@ r4g_rs_load = PythonOperator(
     python_callable=jobrun('travel'),
     dag = dag
 )
-
+"""
 imax_fcom_landing = PythonOperator(
     task_id='imax_fcom_landing',
     python_callable=fcomlanding,
@@ -113,6 +127,7 @@ adobe2.set_upstream(adobe1)
 adobe3.set_upstream(adobe2)
 
 r4g_ingest.set_upstream(adobe3)
+"""
 r4g_local.set_upstream(r4g_ingest)
 r4g_merch.set_upstream(r4g_ingest)
 r4g_point.set_upstream(r4g_ingest)
@@ -130,5 +145,6 @@ r4g_rs_load.set_upstream(r4g_sweep)
 r4g_rs_load.set_upstream(r4g_travel)
 
 imax_fcom_landing.set_upstream(r4g_rs_load)
+"""
 imax_fcom_rsload.set_upstream(imax_fcom_landing)
 

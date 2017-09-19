@@ -9,7 +9,7 @@ from aarp.common.utils import loadYAMLEnvVariables,checkForProdCluster,createClu
 CONFIG=loadYAMLEnvVariables()
 clusterid=checkForProdCluster(CONFIG['cluster_name'])
 
-if clusterid['cluster_id'] is null:
+if checkForProdCluster(CONFIG['cluster_name']) is None:
 	clusterid=createCluster(CONFIG['cluster_name'])
 
 def mnthlyscores():     

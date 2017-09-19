@@ -9,11 +9,10 @@ from aarp.common.utils import loadYAMLEnvVariables,checkForProdCluster,createClu
 CONFIG=loadYAMLEnvVariables()
 clusterid=checkForProdCluster(CONFIG['cluster_name'])
 
-if clusterid['cluster_id'] is null:
+if clusterid is None:
 	clusterid=createCluster(CONFIG['cluster_name'])
 
-
-def fcomlanding:     
+def fcomlanding():
     postdata = {
       "run_name": "fcom_landing",
       "existing_cluster_id":clusterid['cluster_id'],
@@ -28,7 +27,7 @@ def fcomlanding:
     print(runid)
     monitorJob(runid)
 	
-def fcomrsload:
+def fcomrsload():
     print(paramjson["clusterid"])
       
     postdata = {
