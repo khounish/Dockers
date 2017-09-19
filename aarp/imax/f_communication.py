@@ -1,12 +1,12 @@
+#!/usr/bin/python
 from aarp.common.utils import createCluster, monitorJob, destroyCluster,loadEnvVariables
 import requests
 
 def startFcomLakeJob():
-	airflow_environment=loadEnvVariables()
+    airflow_environment=loadEnvVariables()
     clusterMetaData = createCluster(name=airflow_environment['cluster_name'], num_workers=6)
     print clusterMetaData
-	
-	 postdata = {
+    postdata = {
       "run_name": "fcom_lake_job",
       "existing_cluster_id":clusterMetaData['clusterid'],
       "timeout_seconds": 3600,
@@ -27,11 +27,11 @@ def startFcomLakeJob():
     url = "https://dbc-db50c5d5-5ae4.cloud.databricks.com/api/2.0/jobs/runs/get?run_id="+runid
     res = requests.get(url, auth=('production@aarp.com','C@serta!23'))
 
-	if res.status_code == 200:
+if res.status_code == 200:
         print 'job launched successfully, will start monitoring'
         print res.json()
         monitorJob(str(res.json()['run_id']))
-    else:
+else:
         raise ReferenceError(
             'The notebook id does not match the dobule_lake_click job name, please update job or notebook to match')
 			

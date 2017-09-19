@@ -6,6 +6,7 @@ import pysftp as sftp
 import requests
 import json, yaml
 from aarp.common.utils import loadYAMLEnvVariables, checkForProdCluster, createCluster
+#from aarp.common.utils import  checkForProdCluster, createCluster
 
 #CONFIG=loadEnvVariables()
 CONFIG=loadYAMLEnvVariables()
