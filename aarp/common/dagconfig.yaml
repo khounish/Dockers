@@ -48,9 +48,9 @@ DEV:
 PRODUCTION:
   submiturl : "https://dbc-db50c5d5-5ae4.cloud.databricks.com/prodapi/2.0/"
   cluster_name: "dev_cluster"
-  landingPath: " "
-  datalakePath: " "
-  archivalPath: " "
+  landingPath: "  "
+  datalakePath: "  "
+  archivalPath: "  "
   ima:
     fcom:
        pathDataLakeImax: "/mnt/datalake/imax/"
