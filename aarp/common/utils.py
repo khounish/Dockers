@@ -1,7 +1,7 @@
 import requests
 from time import sleep
-import yaml
 import os
+import yaml, json
 
 def checkForProdCluster(name):
     url = "https://dbc-db50c5d5-5ae4.cloud.databricks.com/api/2.0/clusters/list"
@@ -17,7 +17,7 @@ def checkForProdCluster(name):
             clusterMetaData['cluster_id'] = cluster['cluster_id']
     return clusterMetaData
 
-def createCluster(name="prod_cluster", num_workers=9):
+def createCluster(name="prod_cluster", num_workers=9, production=False):
     postdata = {
         "cluster_name": name,
         "spark_version": "2.0.x-scala2.10",
@@ -35,7 +35,12 @@ def createCluster(name="prod_cluster", num_workers=9):
         ],
         "num_workers": num_workers
     }
+    if production:
+        postdata['aws_attributes']['instance_profile_arn'] = 'arn:aws:iam::148546933577:instance-profile/databricks_cluster_role'
+    else:
+        postdata['aws_attributes']['instance_profile_arn'] = 'arn:aws:iam::148546933577:instance-profile/userCluster'
 
+    print postdata
     clusterMetaData = checkForProdCluster(name)
     if not clusterMetaData.has_key('cluster_name'):
         createClusterURL = "https://dbc-db50c5d5-5ae4.cloud.databricks.com/api/2.0/clusters/create"
