@@ -1,5 +1,6 @@
 import requests
 from time import sleep
+import os
 import yaml, json
 
 def checkForProdCluster(name):
@@ -99,22 +100,12 @@ def monitorJob(run_id):
     else:
         raise LookupError("Could not find a job with run_id "+str(run_id)+"monitoring the job failed")
 
-def loadEnvVariables():
-    with open('config.properties') as json_data:
-        data=json.load(json_data)
-    json_data.close()
-	#This will be replaced by env variable
-    airflow_environment=data['DEV']
-    #print airflow_environment
-    return airflow_environment
-
 def loadYAMLEnvVariables():
-    with open('dagconfig.yaml') as yaml_data:
-        data=yaml.load(yaml_data)
-        yaml_data.close()
-	#This will be replaced by env variable
-    airflow_environment=data['DEV']
-    #print airflow_environment
-    return airflow_environment
+    with open(os.path.abspath('/data/airflow/dags/dagconfig.yaml')) as yaml_data:
+    datayaml=yaml.load(yaml_data)
+	airflow_zone= os.environ['airflow_zone']
+    airflow_yaml_environment=datayaml[airflow_zone]
+    print airflow_environment
+	return airflow_yaml_environment
 
 
