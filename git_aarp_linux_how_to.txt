@@ -1,0 +1,25 @@
+                          git-AARP airflow instructions & example 
+Author: Swapnilspra<swapnilspra@gmail.com>
+  
+        # clone the  development branch of remote repository
+	 git clone -b develop https://swapnilspra:Babal%4026@github.com/Caserta-Concepts/aarp-airflow.git
+	
+	#by default  it will be set to master  hence set the remote head to required branch
+	git remote set-head origin develop
+	
+	#set some confgiration parameter for git commit
+	git config --global user.name "swapnilspra"
+	git config --global user.email "swapnilspra@gmail.com"
+	
+	#for adding new file.(example dagconfig.yaml)
+	git add aarp/common/dagconfig.yaml
+	
+	# do git commit before push
+	git commit  .
+	
+	# commit to the  development branch
+	git push https://swapnilspra:Babal%4026@github.com/Caserta-Concepts/aarp-airflow.git HEAD:develop
+	
+	# sync local repo with modified remote changes.
+	git pull origin develop
+	
