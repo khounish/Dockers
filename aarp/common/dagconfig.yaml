@@ -60,10 +60,10 @@ PRODUCTION:
 
 QA:
   submiturl : "https://dbc-db50c5d5-5ae4.cloud.databricks.com/qaapi/2.0/"
-  cluster_name: "prod_cluster"
-  landingPath: ""
-  datalakePath: ""
-  archivalPath: ""
+  cluster_name: "qa_cluster"
+  landingPath: "  "
+  datalakePath: "  "
+  archivalPath: "  "
   ima:
     fcom:
        pathDataLakeImax: "/mnt/datalake/qaimax/"
